@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
 from rest_framework import serializers
 
-from app.models import Patient
+from app.models import Client, Like
 
 
-class PatientSerializer(serializers.ModelSerializer):
+class ClientSerializer(serializers.ModelSerializer):
     class Meta:
-        model= Patient
-        fields = ('last_name', 'first_name', 'full_name')
+        model= Client
+        fields = ('appoint_date', 'appoint_status')
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Like
+        fields = ('url', 'description', 'created_at')
+

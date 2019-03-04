@@ -25,7 +25,7 @@ SECRET_KEY = 'vx5(qe_5tppvkchx95co#*=h$n4+nohzl4ga(v^jvt=(cvum41'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -94,6 +94,17 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'vm',
+#         'USER': "vmadmin",
+#         'PASSWORD': "vmadmin_0303",
+#         'HOST': 'value-management.cvphqjsc6plt.ap-northeast-1.rds.amazonaws.com',
+#         'PORT': '3306',
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -131,6 +142,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
-
 # AUTH_USER = 'app.User'
+STATIC_URL = 'https://s3-ap-northeast-1.amazonaws.com/value-management/static/'
+
+STATIC_ROOT = 'static/'

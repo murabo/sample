@@ -18,15 +18,13 @@ from django.contrib import admin
 from django.conf.urls import include
 from django.urls import path
 from rest_framework.authtoken import views
-from rest_framework.routers import DefaultRouter
 
-from app.views import PatientView
 
-router = DefaultRouter()
-router.register('patients', PatientView)
+from app.views import ClientView, LikeView
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('user/like', LikeView.as_view()),
+    path('user', ClientView.as_view()),
     url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^admin/', admin.site.urls),
