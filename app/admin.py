@@ -23,6 +23,7 @@ class ClientAdmin(admin.ModelAdmin):
         (None, {'fields': ('place', 'appoint_date', 'appoint_status')}),
     )
     list_editable = ('appoint_status',)
+    list_filter = ('appoint_status',)
 
 
 
