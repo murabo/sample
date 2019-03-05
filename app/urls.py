@@ -23,10 +23,10 @@ from rest_framework.authtoken import views
 from app.views import ClientView, LikeView, EstimateView
 
 urlpatterns = [
-    path('user/like', LikeView.as_view()),
-    path('user/estimate', EstimateView.as_view()),
-    path('user', ClientView.as_view()),
-    url(r'^api-token-auth/', views.obtain_auth_token),
-    url(r'^api-auth/', include('rest_framework.urls')),
+    path('api/user/like', LikeView.as_view()),
+    path('api/user/estimate', EstimateView.as_view()),
+    path('api/user', ClientView.as_view()),
+    # url(r'^api-token-auth/', views.obtain_auth_token),
+    # url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^admin/', admin.site.urls),
 ]
