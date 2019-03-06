@@ -18,7 +18,7 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = ('url', 'description', 'created_at')
 
 
-class EstimateSerializer(serializers.ModelSerializer):
+class UserEstimateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Estimate
         fields = (

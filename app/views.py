@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from api.models import *
 from app.models import *
-from app.serializers import ClientSerializer, LikeSerializer, EstimateSerializer
+from app.serializers import ClientSerializer, LikeSerializer, UserEstimateSerializer
 
 
 class ClientView(APIView):
@@ -93,7 +93,6 @@ class LikeView(APIView):
                 "offset": 0,
                 "pages": []
             }
-            print(request.data)
             user_id = request.data['user_id']
             limit = int(request.GET.get('limit', 100))
             offset = int(request.GET.get('offset', 0))
@@ -117,7 +116,7 @@ class LikeView(APIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
-        print(request.data)
+
         results = {
             "total": 0,
             "limit": 100,
@@ -143,8 +142,7 @@ class LikeView(APIView):
         return Response(results)
 
 
-
-class EstimateView(APIView):
+class UserEstimateView(APIView):
 
     def get(self, request, *args, **kwargs):
         """
@@ -170,13 +168,12 @@ class EstimateView(APIView):
         estimates = Estimate.objects.filter(client=user_id)[offset * limit:limit * (1 + offset)]
 
         if estimates:
-            results["estimates"] = EstimateSerializer(estimates, many=True).data
+            results["estimates"] = UserEstimateSerializer(estimates, many=True).data
             results["total"] = len(Estimate.objects.filter(client=user_id))
             results["limit"] = limit
             results["offset"] = offset
 
         return Response(results)
-
 
     def post(self, request, *args, **kwargs):
         try:
@@ -186,11 +183,10 @@ class EstimateView(APIView):
                 "offset": 0,
                 "pages": []
             }
-            print(request.data)
+
             user_id = request.data['user_id']
             limit = int(request.GET.get('limit', 100))
             offset = int(request.GET.get('offset', 0))
-
 
             site_id = request.data['site_id']
             banquet_id = request.data['banquet_id']
@@ -234,7 +230,7 @@ class EstimateView(APIView):
             )
             estimates = Estimate.objects.filter(client=user_id)[offset * limit:limit * (1 + offset)]
             if estimates:
-                results["estimates"] = EstimateSerializer(estimates, many=True).data
+                results["estimates"] = UserEstimateSerializer(estimates, many=True).data
                 results["total"] = len(Like.objects.filter(client=user_id))
                 results["limit"] = limit
                 results["offset"] = offset
@@ -245,7 +241,6 @@ class EstimateView(APIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
-        print(request.data)
         results = {
             "total": 0,
             "limit": 100,
@@ -255,16 +250,62 @@ class EstimateView(APIView):
         user_id = request.data['user_id']
         limit = int(request.GET.get('limit', 100))
         offset = int(request.GET.get('offset', 0))
-        url = request.data['url']
+        estimate_id = request.data['estimate_id']
         client = Client.objects.get(pk=user_id)
-        Like.objects.get(
+        Estimate.objects.get(
             client=client,
-            url=url
+            estimate_id=estimate_id
         ).delete()
-        likes = Like.objects.filter(client=user_id)[offset * limit:limit * (1 + offset)]
-        if likes:
-            results["pages"] = LikeSerializer(likes, many=True).data
+        estimates = Estimate.objects.filter(client=user_id)[offset * limit:limit * (1 + offset)]
+        if estimates:
+            results["estimates"] = UserEstimateSerializer(estimates, many=True).data
             results["total"] = len(Like.objects.filter(client=user_id))
+            results["limit"] = limit
+            results["offset"] = offset
+
+        return Response(results)
+
+
+class EstimateView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        """
+        user_id :String 必須
+        limit   :Int デフォルト値100(取得件数)
+        offset  :Int 取得オフセット(取得したいページ数)
+        :return:
+            {
+
+            }
+        """
+
+        results = {
+            "total": 0,
+            "limit": 100,
+            "offset": 0,
+            "pages": []
+        }
+
+        user_id = request.GET['user_id']
+        limit = int(request.GET.get('limit', 100))
+        offset = int(request.GET.get('offset', 0))
+        client = Client.objects.get(pk=user_id)
+        site_id = client.site_id
+        bq = Banquet.objects.filter(site_id=site_id)
+        bq = Banquet.objects.filter(site_id=site_id)
+        bq = Banquet.objects.filter(site_id=site_id)
+        bq = Banquet.objects.filter(site_id=site_id)
+        bq = Banquet.objects.filter(site_id=site_id)
+        bq = Banquet.objects.filter(site_id=site_id)
+        bq = Banquet.objects.filter(site_id=site_id)
+        bq = Banquet.objects.filter(site_id=site_id)
+        bq = Banquet.objects.filter(site_id=site_id)
+        bq = Banquet.objects.filter(site_id=site_id)
+        estimates = Estimate.objects.filter(client=user_id)[offset * limit:limit * (1 + offset)]
+
+        if estimates:
+            results["estimates"] = UserEstimateSerializer(estimates, many=True).data
+            results["total"] = len(Estimate.objects.filter(client=user_id))
             results["limit"] = limit
             results["offset"] = offset
 
